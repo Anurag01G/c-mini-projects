@@ -1,0 +1,92 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+template<class T>
+class Library 
+{
+    private:
+    T bookid;
+    string bookname;
+    string author;
+    bool issued;
+
+    public:
+    Library (T id, string name, string a)
+    {
+        bookid = id;
+        bookname = name;
+        author = a;
+        issued = true;
+    }
+
+    void display()
+    {
+        cout<<"\n Book ID     : "<<bookid;
+        cout<<"\n Book Name   : "<<bookname;
+        cout<<"\n Author Name : "<<author;
+        cout<<"\n Status      : ";
+
+        if(issued)
+        {
+            cout<<"Issued";
+        }
+        else
+        {
+            cout<<"Available";
+        }
+        cout<<"\n";
+    }
+
+    void issuebook()
+    {
+        if(issued)
+        {
+            issued = true;
+            cout<<"\n Book issued successfully.";
+        }
+        else
+        {
+            cout<<"\n Book is already issued.";
+        }
+    }
+
+    void returnbook()
+    {
+        if(issued)
+        {
+            issued = false;
+            cout<<"\n Book returned successfully.";
+        }
+        else
+        {
+            cout<<"\n Book was not issued.";
+        }
+    }
+};
+
+int main()
+{
+    Library<int> book1(101, " OOP'S ","Robert Lafore");
+    Library<string> book2("102", " C++ ","Robert Lafore");
+
+    cout<<" ----- LIBRARY MANAGEMENT ----- \n";
+    cout<<"\nBook 1 Details :\n";
+    book1.display();
+
+    cout<<"\nBook 2 Details :\n";
+    book2.display();
+
+    cout<<"\n ----- BOOK 1 ISSUE OPERATION -----";
+    book1.issuebook();
+    book1.display();
+
+    cout<<"\n ----- BOOK 2 ISSUE OPERATION -----";
+    book2.issuebook();
+    book2.display();
+    book2.returnbook();
+
+    return 0;
+
+
+}
