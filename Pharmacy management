@@ -1,0 +1,417 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+struct Medicine {
+    int id;
+    string name;
+    double price;
+    int quantity;
+};
+
+class PharmacyManagementSystem {
+private:
+    Medicine stock[100];
+    int count;
+
+public:
+
+    PharmacyManagementSystem() {
+        count = 4;
+
+        stock[0] = {101, "Paracetamol", 2.50, 50};
+        stock[1] = {102, "Amoxicillin", 8.00, 30};
+        stock[2] = {103, "Ibuprofen", 5.50, 40};
+        stock[3] = {104, "Cetirizine", 3.00, 60};
+    }
+
+    // PHARMACIST - BUY MEDICINE
+    void buyMedicine() {
+        int id, qty;
+
+        cout << "\nEnter Medicine ID to Buy: ";
+        cin >> id;
+
+        for (int i = 0; i < count; i++) {
+            if (stock[i].id == id) {
+
+                cout << "Medicine Found: " << stock[i].name
+                     << " (Available: " << stock[i].quantity
+                     << ", Price: $" << stock[i].price << ")\n";
+
+                cout << "Enter Quantity to Buy: ";
+                cin >> qty;
+
+                if (qty <= 0) {
+                    cout << "Invalid quantity!\n";
+                    return;
+                }
+
+                if (qty > stock[i].quantity) {
+                    cout << "Not enough stock available!\n";
+                    return;
+                }
+
+                stock[i].quantity -= qty;
+
+                double total = qty * stock[i].price;
+
+                cout << "\n---------------- BILL ----------------\n";
+                cout << "Item:         " << stock[i].name << "\n";
+                cout << "Quantity:     " << qty << "\n";
+                cout << "Price/Unit:   $" << fixed << setprecision(2)
+                     << stock[i].price << "\n";
+                cout << "Total Amount: $" << total << "\n";
+                cout << "--------------------------------------\n";
+                cout << "Purchase successful!\n";
+
+                return;
+            }
+        }
+
+        cout << "Medicine ID not found!\n";
+    }
+
+    // DISPLAY MEDICINES
+    void showItemList() {
+        if (count == 0) {
+            cout << "\nNo medicines available in stock.\n";
+            return;
+        }
+
+        cout << "\n================ CURRENT STOCK LIST ================\n";
+
+        cout << left
+             << setw(10) << "ID"
+             << setw(20) << "Name"
+             << setw(12) << "Price ($)"
+             << setw(10) << "Quantity" << "\n";
+
+        cout << "----------------------------------------------------\n";
+
+        for (int i = 0; i < count; i++) {
+            cout << left
+                 << setw(10) << stock[i].id
+                 << setw(20) << stock[i].name
+                 << setw(12) << fixed << setprecision(2)
+                 << stock[i].price
+                 << setw(10) << stock[i].quantity
+                 << "\n";
+        }
+
+        cout << "====================================================\n";
+    }
+
+    // FIND MEDICINE
+    void findItem() {
+        int id;
+
+        cout << "\nEnter Medicine ID to search: ";
+        cin >> id;
+
+        for (int i = 0; i < count; i++) {
+
+            if (stock[i].id == id) {
+
+                cout << "\n--- Medicine Details ---\n";
+                cout << "ID:       " << stock[i].id << "\n";
+                cout << "Name:     " << stock[i].name << "\n";
+                cout << "Price:    $" << fixed << setprecision(2)
+                     << stock[i].price << "\n";
+                cout << "Quantity: " << stock[i].quantity << "\n";
+
+                return;
+            }
+        }
+
+        cout << "Medicine ID not found!\n";
+    }
+
+    // ADD MEDICINE
+    void addItem() {
+
+        if (count >= 100) {
+            cout << "\nStock is full!\n";
+            return;
+        }
+
+        Medicine newItem;
+
+        cout << "\nEnter New Medicine ID: ";
+        cin >> newItem.id;
+
+        for (int i = 0; i < count; i++) {
+
+            if (stock[i].id == newItem.id) {
+                cout << "Medicine ID already exists!\n";
+                return;
+            }
+        }
+
+        cout << "Enter Medicine Name: ";
+        cin.ignore();
+        getline(cin, newItem.name);
+
+        cout << "Enter Price: ";
+        cin >> newItem.price;
+
+        cout << "Enter Quantity: ";
+        cin >> newItem.quantity;
+
+        stock[count] = newItem;
+        count++;
+
+        cout << "Medicine added successfully!\n";
+    }
+
+    // UPDATE MEDICINE
+    void updateItem() {
+
+        int id;
+
+        cout << "\nEnter Medicine ID to update: ";
+        cin >> id;
+
+        for (int i = 0; i < count; i++) {
+
+            if (stock[i].id == id) {
+
+                cout << "Updating item: "
+                     << stock[i].name << "\n";
+
+                cout << "Enter New Name: ";
+                cin.ignore();
+                getline(cin, stock[i].name);
+
+                cout << "Enter New Price: ";
+                cin >> stock[i].price;
+
+                cout << "Enter New Quantity: ";
+                cin >> stock[i].quantity;
+
+                cout << "Medicine updated successfully!\n";
+
+                return;
+            }
+        }
+
+        cout << "Medicine ID not found!\n";
+    }
+
+    // DELETE MEDICINE
+    void deleteItem() {
+
+        int id;
+
+        cout << "\nEnter Medicine ID to delete: ";
+        cin >> id;
+
+        for (int i = 0; i < count; i++) {
+
+            if (stock[i].id == id) {
+
+                for (int j = i; j < count - 1; j++) {
+                    stock[j] = stock[j + 1];
+                }
+
+                count--;
+
+                cout << "Medicine deleted successfully!\n";
+
+                return;
+            }
+        }
+
+        cout << "Medicine ID not found!\n";
+    }
+
+    // BUYER - DISPLAY MEDICINES
+    void buyerDisplay() {
+
+        cout << "\n============= AVAILABLE MEDICINES =============\n";
+
+        cout << left
+             << setw(10) << "ID"
+             << setw(20) << "Name"
+             << setw(12) << "Price ($)"
+             << setw(10) << "Quantity" << "\n";
+
+        cout << "------------------------------------------------\n";
+
+        for (int i = 0; i < count; i++) {
+
+            if (stock[i].quantity > 0) {
+
+                cout << left
+                     << setw(10) << stock[i].id
+                     << setw(20) << stock[i].name
+                     << setw(12) << fixed << setprecision(2)
+                     << stock[i].price
+                     << setw(10) << stock[i].quantity
+                     << "\n";
+            }
+        }
+
+        cout << "================================================\n";
+    }
+
+    // BUYER - REQUEST MEDICINE
+    void requestMedicine() {
+
+        string medicineName;
+        int quantity;
+
+        cout << "\nEnter Required Medicine Name: ";
+        cin.ignore();
+        getline(cin, medicineName);
+
+        cout << "Enter Required Quantity: ";
+        cin >> quantity;
+
+        cout << "\n---------- MEDICINE REQUEST ----------\n";
+        cout << "Medicine Name: " << medicineName << "\n";
+        cout << "Quantity:      " << quantity << "\n";
+        cout << "--------------------------------------\n";
+
+        cout << "Medicine request submitted successfully!\n";
+        cout << "Pharmacist will check the availability.\n";
+    }
+
+    // PHARMACIST MENU
+    void pharmacistMenu() {
+
+        int choice;
+
+        while (true) {
+
+            cout << "\n========================================\n";
+            cout << "          PHARMACIST MENU\n";
+            cout << "========================================\n";
+
+            cout << "1. Buy Medicine\n";
+            cout << "2. Display Medicine\n";
+            cout << "3. Find Medicine\n";
+            cout << "4. Add Medicine\n";
+            cout << "5. Update Medicine\n";
+            cout << "6. Delete Medicine\n";
+            cout << "7. Back to Main Menu\n";
+
+            cout << "Choose One: ";
+            cin >> choice;
+
+            switch (choice) {
+
+                case 1:
+                    buyMedicine();
+                    break;
+
+                case 2:
+                    showItemList();
+                    break;
+
+                case 3:
+                    findItem();
+                    break;
+
+                case 4:
+                    addItem();
+                    break;
+
+                case 5:
+                    updateItem();
+                    break;
+
+                case 6:
+                    deleteItem();
+                    break;
+
+                case 7:
+                    return;
+
+                default:
+                    cout << "Invalid choice!\n";
+            }
+        }
+    }
+
+    // BUYER MENU
+    void buyerMenu() {
+
+        int choice;
+
+        while (true) {
+
+            cout << "\n========================================\n";
+            cout << "             BUYER MENU\n";
+            cout << "========================================\n";
+
+            cout << "1. Display Available Medicines\n";
+            cout << "2. Request Required Medicine\n";
+            cout << "3. Back to Main Menu\n";
+
+            cout << "Choose One: ";
+            cin >> choice;
+
+            switch (choice) {
+
+                case 1:
+                    buyerDisplay();
+                    break;
+
+                case 2:
+                    requestMedicine();
+                    break;
+
+                case 3:
+                    return;
+
+                default:
+                    cout << "Invalid choice!\n";
+            }
+        }
+    }
+};
+
+
+int main() {
+
+    PharmacyManagementSystem pms;
+
+    int choice;
+
+    while (true) {
+
+        cout << "\n\n============================================\n";
+        cout << "       MEDICINE वाला.......\n";
+        cout << "============================================\n";
+
+        cout << "1. Pharmacist\n";
+        cout << "2. Buyer\n";
+        cout << "3. Exit\n";
+
+        cout << "Choose One: ";
+        cin >> choice;
+
+        switch (choice) {
+
+            case 1:
+                pms.pharmacistMenu();
+                break;
+
+            case 2:
+                pms.buyerMenu();
+                break;
+
+            case 3:
+                cout << "\nThank you for using Pharmacy Management System!\n";
+                return 0;
+
+            default:
+                cout << "\nInvalid choice! Please choose between 1 and 3.\n";
+        }
+    }
+
+    return 0;
+}
