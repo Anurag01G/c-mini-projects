@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+int balance = 50000;
+int amount, withdrawAmount, choice;
+
+void balanceEnquiry()
+{
+    cout << "\nBalance: " << balance << endl;
+}
+
+void cashDeposit()
+{
+    cout << "\nEnter depositing amount: ";
+    cin >> amount;
+
+    if (amount > 0)
+    {
+        balance = balance + amount;
+        cout << "Total amount: " << balance << endl;
+    }
+    else
+    {
+        cout << "Invalid amount!" << endl;
+    }
+}
+
+void cashWithdraw()
+{
+    cout << "\nEnter withdrawal amount: ";
+    cin >> withdrawAmount;
+
+    if (withdrawAmount <= 0)
+    {
+        cout << "Invalid amount!" << endl;
+    }
+    else if (withdrawAmount > balance)
+    {
+        cout << "Insufficient balance!" << endl;
+    }
+    else
+    {
+        balance = balance - withdrawAmount;
+        cout << "Remaining amount: " << balance << endl;
+    }
+}
+
+int main()
+{
+    do
+    {
+        cout << "\n\n**** SBI ATM ****" << endl;
+        cout << "1. Balance Enquiry" << endl;
+        cout << "2. Cash Deposit" << endl;
+        cout << "3. Cash Withdrawal" << endl;
+        cout << "4. Exit" << endl;
+
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                balanceEnquiry();
+                break;
+
+            case 2:
+                cashDeposit();
+                break;
+
+            case 3:
+                cashWithdraw();
+                break;
+
+            case 4:
+                cout << "\nTHANK YOU FOR VISITING" << endl;
+                cout << "HAVE A NICE DAY" << endl;
+                break;
+
+            default:
+                cout << "\nInvalid choice! Please try again." << endl;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
