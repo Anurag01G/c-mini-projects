@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+int roll[10] = {101, 105, 110, 115, 120,
+                125, 130, 135, 140, 145};
+
+int key;
+
+int binarySearch()
+{
+    int low = 0;
+    int high = 9;
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (roll[mid] == key)
+        {
+            return mid;
+        }
+        else if (roll[mid] < key)
+        {
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+int main()
+{
+    cout << "===== Student Roll Number Search =====" << endl;
+
+    cout << "Enter Roll Number: ";
+    cin >> key;
+
+    int result = binarySearch();
+
+    if (result != -1)
+    {
+        cout << "Roll Number " << key << " found." << endl;
+        cout << "Position: " << result + 1 << endl;
+    }
+    else
+    {
+        cout << "Roll Number " << key << " not found." << endl;
+    }
+
+    return 0;
+}
