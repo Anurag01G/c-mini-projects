@@ -1,0 +1,185 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct Player
+{
+    string name;
+    int score;
+};
+
+Player players[100];
+int count = 0;
+
+// Sort players by highest score
+bool compare(Player a, Player b)
+{
+    return a.score > b.score;
+}
+
+void addPlayer()
+{
+    if (count >= 100)
+    {
+        cout << "Leaderboard is full!\n";
+        return;
+    }
+
+    cout << "Enter player name: ";
+    cin >> players[count].name;
+
+    cout << "Enter score: ";
+    cin >> players[count].score;
+
+    count++;
+
+    sort(players, players + count, compare);
+
+    cout << "Player added successfully!\n";
+}
+
+void displayLeaderboard()
+{
+    if (count == 0)
+    {
+        cout << "No players available.\n";
+        return;
+    }
+
+    cout << "\n===== LEADERBOARD =====\n";
+    cout << "Rank\tPlayer\tScore\n";
+
+    for (int i = 0; i < count; i++)
+    {
+        cout << i + 1 << "\t"
+             << players[i].name << "\t"
+             << players[i].score << endl;
+    }
+}
+
+void searchPlayer()
+{
+    string name;
+    cout << "Enter player name: ";
+    cin >> name;
+
+    for (int i = 0; i < count; i++)
+    {
+        if (players[i].name == name)
+        {
+            cout << "\nPlayer Found!\n";
+            cout << "Name: " << players[i].name << endl;
+            cout << "Score: " << players[i].score << endl;
+            cout << "Rank: " << i + 1 << endl;
+            return;
+        }
+    }
+
+    cout << "Player not found.\n";
+}
+
+void updateScore()
+{
+    string name;
+    int newScore;
+
+    cout << "Enter player name: ";
+    cin >> name;
+
+    for (int i = 0; i < count; i++)
+    {
+        if (players[i].name == name)
+        {
+            cout << "Enter new score: ";
+            cin >> newScore;
+
+            players[i].score = newScore;
+
+            sort(players, players + count, compare);
+
+            cout << "Score updated successfully!\n";
+            return;
+        }
+    }
+
+    cout << "Player not found.\n";
+}
+
+void removePlayer()
+{
+    string name;
+
+    cout << "Enter player name: ";
+    cin >> name;
+
+    for (int i = 0; i < count; i++)
+    {
+        if (players[i].name == name)
+        {
+            // Shift elements to left
+            for (int j = i; j < count - 1; j++)
+            {
+                players[j] = players[j + 1];
+            }
+
+            count--;
+
+            cout << "Player removed successfully!\n";
+            return;
+        }
+    }
+
+    cout << "Player not found.\n";
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        cout << "\n===== GAME LEADERBOARD SYSTEM =====\n";
+        cout << "1. Add Player\n";
+        cout << "2. Display Leaderboard\n";
+        cout << "3. Search Player\n";
+        cout << "4. Update Score\n";
+        cout << "5. Remove Player\n";
+        cout << "6. Exit\n";
+
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                addPlayer();
+                break;
+
+            case 2:
+                displayLeaderboard();
+                break;
+
+            case 3:
+                searchPlayer();
+                break;
+
+            case 4:
+                updateScore();
+                break;
+
+            case 5:
+                removePlayer();
+                break;
+
+            case 6:
+                cout << "Thank you!\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}
