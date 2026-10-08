@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    string name;
+    int roll, m1, m2, m3, total;
+    float percentage;
+
+    cout << "===== Student Marks System =====\n";
+
+    cout << "Enter Student Name: ";
+    cin >> name;
+
+    cout << "Enter Roll Number: ";
+    cin >> roll;
+
+    cout << "Enter marks of 3 subjects: ";
+    cin >> m1 >> m2 >> m3;
+
+    total = m1 + m2 + m3;
+    percentage = total / 3.0;
+
+    cout << "\n===== Student Details =====\n";
+    cout << "Name       : " << name << endl;
+    cout << "Roll No.   : " << roll << endl;
+    cout << "Total Marks: " << total << endl;
+    cout << "Percentage : " << percentage << "%" << endl;
+
+    if (percentage >= 40)
+        cout << "Result     : PASS";
+    else
+        cout << "Result     : FAIL";
+
+    return 0;
+}
