@@ -1,0 +1,135 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+struct student
+{
+    string name;
+    int rollno;
+    float cgpa;
+};
+
+int main()
+{
+    student s[1000];
+    int n, flag, pos, choice, r, i;
+    cout<<"Enter the number of students: ";
+    cin>>n;
+    for(int i=0; i<n; i++)
+    {
+        cout<<"Enter student "<<i+1<<" deatails : "<<endl;
+        cout<<"Name : ";
+        cin>>s[i].name;
+        cout<<"\nRoll No : ";
+        cin>>s[i].rollno;
+        cout<<"\nCGPA : ";
+        cin>>s[i].cgpa;
+    }
+    do
+    {
+        cout<<"\n1.Insert student deatils"<<endl;
+        cout<<"\n2.Delete student deatils by Roll No"<<endl;
+        cout<<"\nSearch student deatils by Roll no"<<endl;
+        cout<<"\n4.Display all student deatils"<<endl;
+        cout<<"\n5.Exit"<<endl;
+
+        cout<<"Enter your choice : ";
+        cin>>choice;
+
+        switch(choice)
+        {
+            case 1:
+                cout<<"\nEnter position to insert student details : ";
+                cin>>pos;
+                if(pos>n || pos<1)
+                {
+                    cout<<"\nInvcalid position"<<endl;
+                }
+                else
+                {
+                    for(i=n;i>pos;i--)
+                    {
+                        s[i]=s[i-1];
+                    }
+                    cout<<"\nName : ";
+                    cin>>s[pos-1].name;
+                    cout<<"\nRoll No : ";
+                    cin>>s[pos-1].rollno;
+                    cout<<"\nCGPA : ";
+                    cin>>s[pos-1].cgpa;
+                    n++;
+                    cout<<"\nStudent details inserted successfully"<<endl;
+                }
+                break;
+
+                case 2:
+                cout<<"\nEner Roll of student to delete : ";
+                cin>>r;
+                flag=-1;
+                for(i=0;i<n;i++)
+                {
+                    if(s[i].rollno==r)
+                    {
+                        flag=i;
+                        break;
+                    }
+                }
+                if(flag==-1)
+                {
+                    cout<<"\nstudent not found"<<endl;
+                }
+                else
+                {
+                    for(i=flag;i<n-1;i++)
+                    {
+                        s[i]=s[i+1];
+                    }
+                    n--;
+                    cout<<"\nStudent details deleted successfully"<<endl;
+                }
+                break;
+
+                case 3:
+                cout<<"\nEnter Roll no to Search : ";
+                cin>>r;
+                flag=-1;
+                for(i=0;i<n;i++)
+                {
+                    if(s[i].rollno==r)
+                    {
+                        flag=1;
+                        cout<<"\nStudent details found : "<<endl;
+                        cout<<"Name : "<<s[i].name<<endl;
+                        cout<<"Roll No : "<<s[i].rollno<<endl;
+                        cout<<"CGPA : "<<s[i].cgpa<<endl;
+                        break;
+                    }
+                }
+                if(flag==-1)
+                {
+                    cout<<"\nStudent not found"<<endl;
+                    break;
+                }
+
+                case 4:
+                cout<<"\nStudent details : "<<endl;
+                for(i=0;i<n;i++)
+                {
+                    cout<<"\nStudent "<<i+1<<" details : "<<endl;
+                    cout<<"Name : "<<s[i].name<<endl;
+                    cout<<"Roll NO : "<<s[i].rollno<<endl;
+                    cout<<"CGPA : "<<s[i].cgpa<<endl;
+                }
+                break;
+
+                case 5:
+                cout<<"\nExiting program..."<<endl;
+                break;
+
+                default:
+                cout<<"\nInvalid choice"<<endl;
+
+        } 
+    } while(choice!=5);
+    return 0;
+};
