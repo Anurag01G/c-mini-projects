@@ -1,0 +1,142 @@
+#include <iostream>
+using namespace std;
+
+class Attendance {
+    struct Node {
+        char status;
+        Node* next;
+    };
+
+    Node* head;
+
+public:
+    Attendance() {
+        head = NULL;
+    }
+
+    // a. Insert attendance at the end
+    void insert(char s) {
+        Node* n = new Node{s, NULL};
+
+        if (head == NULL) {
+            head = n;
+        } else {
+            Node* t = head;
+            while (t->next != NULL)
+                t = t->next;
+            t->next = n;
+        }
+        cout << "Attendance added.\n";
+    }
+
+    // b. Update attendance of a given day
+    void update(int day, char s) {
+        Node* t = head;
+
+        for (int i = 1; t != NULL && i < day; i++)
+            t = t->next;
+
+        if (t == NULL || day < 1)
+            cout << "Invalid day!\n";
+        else {
+            t->status = s;
+            cout << "Attendance updated.\n";
+        }
+    }
+
+    // c. Count present and absent days
+    void count() {
+        int p = 0, a = 0;
+        Node* t = head;
+
+        while (t != NULL) {
+            if (t->status == 'P')
+                p++;
+            else
+                a++;
+            t = t->next;
+        }
+
+        cout << "Present days: " << p << endl;
+        cout << "Absent days: " << a << endl;
+    }
+
+    // d. Display attendance list
+    void display() {
+        Node* t = head;
+        int day = 1;
+
+        if (head == NULL) {
+            cout << "No attendance records.\n";
+            return;
+        }
+
+        while (t != NULL) {
+            cout << "Day " << day << ": "
+                 << t->status << endl;
+            t = t->next;
+            day++;
+        }
+    }
+};
+
+int main() {
+    Attendance obj;
+    int choice, day;
+    char s;
+
+    do {
+        cout << "\n1. Insert Attendance";
+        cout << "\n2. Update Attendance";
+        cout << "\n3. Count Present/Absent";
+        cout << "\n4. Display Attendance";
+        cout << "\n5. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter P or A: ";
+                cin >> s;
+                if (s == 'p') s = 'P';
+                if (s == 'a') s = 'A';
+
+                if (s == 'P' || s == 'A')
+                    obj.insert(s);
+                else
+                    cout << "Enter only P or A.\n";
+                break;
+
+            case 2:
+                cout << "Enter day to update: ";
+                cin >> day;
+                cout << "Enter new status (P/A): ";
+                cin >> s;
+                if (s == 'p') s = 'P';
+                if (s == 'a') s = 'A';
+
+                if (s == 'P' || s == 'A')
+                    obj.update(day, s);
+                else
+                    cout << "Enter only P or A.\n";
+                break;
+
+            case 3:
+                obj.count();
+                break;
+
+            case 4:
+                obj.display();
+                break;
+
+            case 5:
+                cout << "Exiting program.\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
