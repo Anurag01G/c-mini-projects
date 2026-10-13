@@ -1,0 +1,68 @@
+#include<iostream>
+using namespace std;
+
+struct Node
+{
+    int marks;
+    Node *next;
+};
+
+int main()
+{
+    int n,i, count=0;
+
+    cout<<"Enter Number of Students : ";
+    cin>>n;
+
+    int arr[1000];
+    Node *head=NULL;
+    Node *temp=NULL;
+
+    for(i=0;i<n;i++)
+    {
+        cout<<"\nEnter IA makrs of "<<i+1<<" Student : ";
+        cin>>arr[i];
+        Node *n= new Node;
+        n->marks=arr[i];
+        n->next=NULL;
+
+        if(head==NULL)
+        {
+            head=n;
+            temp=n;
+        }
+        else
+        {
+            temp->next=n;
+            temp=n;
+        }
+        if(arr[i]>80)
+        {
+            cout<<"Student "<<i+1<<" have greater than 80 IA marks "<<arr[i]<<endl;
+            count++;
+        }
+    }
+    cout<<"IA Marks of Students using Array : "<<endl;
+    for(i=0;i<n;i++)
+    {
+        cout<<"Student "<<i+1<<"\nMarks = "<<arr[i]<<"\tAddress = "<<&arr[i]<<endl;
+    }
+    cout<<"\nIA Marks of Students using Linkedlist : "<<endl;
+    temp=head;
+    while(temp!=NULL)
+    {
+        cout<<"Privious Address = "<<temp<<"\tMarks = "<<temp->marks<<"\tNext Address = "<<temp->next<<endl;
+        temp=temp->next;
+    }
+    temp=head;
+    cout<<"Number of Students who Score greater than 80 : "<<count<<endl;
+    while(temp!=NULL)
+    {
+        Node *n=temp->next;
+        delete temp;
+        temp=n;
+    }
+  return 0;
+  }
+    return 0;
+}
