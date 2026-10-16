@@ -1,0 +1,135 @@
+#include<iostream>
+#include<iostream>
+using namespace std;
+
+struct student
+{
+    string name,div;
+    int rollno;
+};
+int main()
+{
+    student s[100];
+    string names,d;
+    int n,i,r;
+    int choice,comp,found;
+
+    cout<<"Enter number of students : ";
+    cin>>n;
+
+    cout<<"Enter students details \n";
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Enter student "<<i+1<<" details "<<endl;
+        cout<<"Enter Name : ";
+        cin>>s[i].name;
+        cout<<"Enter Roll no : ";
+        cin>>s[i].rollno;
+        cout<<"Enter Div : ";
+        cin>>s[i].div;
+    }
+
+    cout<<"Entered student details "<<endl;
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Name : "<<s[i].name<<"\t"<<"Roll no : "<<s[i].rollno<<"\t"<<"Div : "<<s[i].div<<endl;
+    }
+
+    do
+    {
+        cout<<"1. Linear Search by using Name \n";
+        cout<<"2. Binary Search by using Roll no \n";
+        cout<<"3. Exit \n";
+
+        cout<<"Enter your choice : ";
+        cin>>choice;
+
+        switch(choice)
+        {
+            case 1:
+            cout<<"Enter Name to search : ";
+            cin>>names;
+
+            comp=0;
+            found=0;
+            for(int i=0;i<n;i++)
+            {
+                comp++;
+                if(s[i].name==names)
+                {
+                    cout<<"Found : "<<endl;
+                    cout<<"Name : "<<s[i].name<<"\t"<<"Roll no : "<<s[i].rollno<<"\t"<<"Div : "<<s[i].div<<endl;
+                    found =1;
+                    break;
+                }
+            }
+            if(!found)
+            cout<<"Not found"<<endl;
+            cout<<"Number of comparision(Linear search) : "<<comp<<endl;
+            break;
+
+            case 2:
+            {
+
+                for(int i=0;i<n;i++)
+                {
+                    for(int j=0;j<n-1;j++)
+                    {
+                        if(s[j].rollno>s[j+1].rollno)
+                        {
+                            swap(s[j].rollno,s[j+1].rollno);
+                        }
+                    }
+                }
+                cout<<"Sorted Roll no list : ";
+                for(int i=0;i<n;i++)
+                {
+                    cout<<s[i].rollno<<"\t";
+                }
+                cout<<endl;
+                cout<<"Enter Roll NO to search : ";
+                cin>>r;
+            
+                int low=0;
+                int high=n-1;
+                int mid;
+                comp=0;
+                found=0;
+                while(low<=high)
+                {
+                    mid=low+(high-low)/2;
+                    comp++;
+                    if(s[mid].rollno==r)
+                    {
+                        cout<<"Found "<<endl;
+                        cout<<"Name : "<<s[i].name<<"\t"<<"Roll no : "<<s[i].rollno<<"\t"<<"Div : "<<s[i].div<<endl;
+                        found =1;
+                        break;
+                    }
+                    else if(s[mid].rollno<r)
+                    {
+                        low=mid+1;
+                    }
+                    else
+                    {
+                        high=mid-1;
+                    }
+                    if(!found)
+                    {   
+                        cout<<"Not found "<<endl;
+                    }
+                    cout<<"No of comparision : "<<comp<<endl;
+                    break;
+                }
+            }
+
+            case 3: 
+            cout<<"Exiting program...\n";
+            break;
+
+            default :
+            cout<<"Invalid choice\n";
+        }
+    } while(choice!=3);
+    return 0;
+}
