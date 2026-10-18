@@ -1,0 +1,168 @@
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Suspect {
+    string name;
+    string alibi;
+    string clue;
+};
+
+int main() {
+    string playerName;
+    int choice;
+    int cluesFound = 0;
+    bool talkedToButler = false;
+    bool talkedToChef = false;
+    bool talkedToGardener = false;
+
+    vector<Suspect> suspects = {
+        {"Butler", "I was serving tea at 9 PM.",
+         "A broken cup was found near the library."},
+        {"Chef", "I was cooking dinner in the kitchen.",
+         "The victim's glass contained a strange substance."},
+        {"Gardener", "I was working outside the mansion.",
+         "Muddy footprints lead toward the library."}
+    };
+
+    cout << "====================================\n";
+    cout << "       MYSTERY DETECTIVE GAME\n";
+    cout << "====================================\n";
+
+    cout << "Enter your detective name: ";
+    getline(cin, playerName);
+
+    cout << "\nWelcome, Detective " << playerName << "!\n";
+    cout << "A wealthy businessman, Mr. Black, was found\n";
+    cout << "dead in his library at 9:30 PM.\n";
+    cout << "There are three suspects. Find the truth!\n";
+
+    do {
+        cout << "\n========== DETECTIVE MENU ==========\n";
+        cout << "1. Investigate the library\n";
+        cout << "2. Question the butler\n";
+        cout << "3. Question the chef\n";
+        cout << "4. Question the gardener\n";
+        cout << "5. View investigation report\n";
+        cout << "6. Accuse the murderer\n";
+        cout << "7. Quit game\n";
+        cout << "Choose an option: ";
+
+        if (!(cin >> choice)) {
+            cout << "Invalid input. Game terminated.\n";
+            break;
+        }
+
+        switch (choice) {
+            case 1:
+                cout << "\n--- LIBRARY INVESTIGATION ---\n";
+                cout << "You discover three important clues:\n";
+                cout << "1. A broken cup near the desk.\n";
+                cout << "2. Muddy footprints near the window.\n";
+                cout << "3. A glass with a strange smell.\n";
+
+                if (cluesFound == 0) {
+                    cluesFound = 3;
+                    cout << "\nAll three clues recorded!\n";
+                } else {
+                    cout << "\nYou have already recorded these clues.\n";
+                }
+                break;
+
+            case 2:
+                cout << "\n--- BUTLER INTERROGATION ---\n";
+                cout << "Alibi: " << suspects[0].alibi << "\n";
+                cout << "Observation: " << suspects[0].clue << "\n";
+                cout << "The butler looks nervous.\n";
+                talkedToButler = true;
+                break;
+
+            case 3:
+                cout << "\n--- CHEF INTERROGATION ---\n";
+                cout << "Alibi: " << suspects[1].alibi << "\n";
+                cout << "Observation: " << suspects[1].clue << "\n";
+                cout << "The chef says the victim ate dinner at 8 PM.\n";
+                talkedToChef = true;
+                break;
+
+            case 4:
+                cout << "\n--- GARDENER INTERROGATION ---\n";
+                cout << "Alibi: " << suspects[2].alibi << "\n";
+                cout << "Observation: " << suspects[2].clue << "\n";
+                cout << "The gardener's shoes are covered in mud.\n";
+                talkedToGardener = true;
+                break;
+
+            case 5:
+                cout << "\n======= INVESTIGATION REPORT =======\n";
+                cout << "Detective: " << playerName << "\n";
+                cout << "Clues recorded: " << cluesFound << "/3\n";
+                cout << "Butler questioned: "
+                     << (talkedToButler ? "Yes" : "No") << "\n";
+                cout << "Chef questioned: "
+                     << (talkedToChef ? "Yes" : "No") << "\n";
+                cout << "Gardener questioned: "
+                     << (talkedToGardener ? "Yes" : "No") << "\n";
+                break;
+
+            case 6: {
+                if (cluesFound < 3 ||
+                    !talkedToButler ||
+                    !talkedToChef ||
+                    !talkedToGardener) {
+                    cout << "\nYou need more evidence!\n";
+                    cout << "Investigate the library and question\n";
+                    cout << "all three suspects first.\n";
+                    break;
+                }
+
+                cout << "\nWho do you accuse?\n";
+                cout << "1. Butler\n";
+                cout << "2. Chef\n";
+                cout << "3. Gardener\n";
+                cout << "Enter suspect number: ";
+
+                int accusation;
+                if (!(cin >> accusation)) {
+                    cout << "Invalid input.\n";
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    break;
+                }
+
+                cout << "\n========== FINAL VERDICT ==========\n";
+
+                if (accusation == 2) {
+                    cout << "CORRECT! You solved the mystery!\n";
+                    cout << "The chef poisoned Mr. Black's drink.\n";
+                    cout << "The strange substance in the glass was\n";
+                    cout << "the key evidence against him.\n";
+                    cout << "Congratulations, Detective "
+                         << playerName << "!\n";
+                } else if (accusation == 1 ||
+                           accusation == 3) {
+                    cout << "INCORRECT! You accused an innocent suspect.\n";
+                    cout << "The evidence points to the chef.\n";
+                } else {
+                    cout << "Invalid suspect number.\n";
+                    break;
+                }
+
+                cout << "\nCase closed. Thanks for playing!\n";
+                return 0;
+            }
+
+            case 7:
+                cout << "\nGoodbye, Detective " << playerName << "!\n";
+                return 0;
+
+            default:
+                cout << "\nInvalid choice. Try again.\n";
+        }
+
+    } while (true);
+
+    return 0;
+}
