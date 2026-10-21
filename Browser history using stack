@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+class BrowserHistory {
+    string history[100];
+    int top;
+
+public:
+    BrowserHistory() {
+        top = -1;
+    }
+
+    void visitPage() {
+        if (top == 99) {
+            cout << "History is full!\n";
+            return;
+        }
+
+        string url;
+        cout << "Enter URL: ";
+        cin >> url;
+
+        history[++top] = url;
+        cout << "Page visited successfully.\n";
+    }
+
+    void goBack() {
+        if (top == -1) {
+            cout << "No previous page available.\n";
+        } else {
+            cout << "Going back from: "
+                 << history[top] << endl;
+            top--;
+        }
+    }
+
+    void currentPage() {
+        if (top == -1)
+            cout << "No page visited.\n";
+        else
+            cout << "Current Page: "
+                 << history[top] << endl;
+    }
+
+    void showHistory() {
+        if (top == -1) {
+            cout << "History is empty.\n";
+            return;
+        }
+
+        cout << "Browsing History:\n";
+        for (int i = top; i >= 0; i--)
+            cout << history[i] << endl;
+    }
+};
+
+int main() {
+    BrowserHistory b;
+    int choice;
+
+    do {
+        cout << "\n1. Visit New Page";
+        cout << "\n2. Go Back";
+        cout << "\n3. Display Current Page";
+        cout << "\n4. Show Browsing History";
+        cout << "\n5. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                b.visitPage();
+                break;
+
+            case 2:
+                b.goBack();
+                break;
+
+            case 3:
+                b.currentPage();
+                break;
+
+            case 4:
+                b.showHistory();
+                break;
+
+            case 5:
+                cout << "Exiting program.\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
