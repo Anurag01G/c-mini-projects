@@ -1,0 +1,135 @@
+#include<iostream>
+using namespace std;
+
+class Queue
+{
+    public:
+    int no;
+    int queue[100];
+    int front,rear;
+    Queue()
+    {
+        front=-1;
+        rear=-1;
+    }
+
+    void enQueue(int no)
+    {
+        if(rear==99)
+        {
+            cout<<"Token list is full...";
+            cout<<endl;
+        }
+        else
+        {
+            if(front==-1)
+            {
+                front=0;
+            }
+            rear++;
+            queue[rear]=no;
+            cout<<"Toke no : "<<no<<" is Enqueued. ";
+            cout<<endl;
+        }
+    }
+
+    void deQueue()
+    {
+        if(front==-1 || front > rear)
+        {
+            cout<<"Token list is empty...";
+            cout<<endl;
+        }
+        else
+        {
+            cout<<"Token no : "<<queue[front]<<" is Dequeued. ";
+            front++;
+            if(front > rear)
+            {
+                front = -1;
+                rear = -1;
+            }
+        }
+    }
+
+    void frontRear()
+    {
+        if(front==-1)
+        {
+            cout<<"Token list is empty";
+        }
+        cout<<"First Token Number : "<<queue[front]<<endl;
+        cout<<"Last Token Number : "<<queue[rear]<<endl;
+    }
+
+    void display()
+    {
+        if(front==-1)
+        {
+            cout<<"Token list is empty";
+        }
+        
+        for(int i=front; i<=rear; i++)
+        {
+            cout<<queue[i]<<" ";
+        }
+    }
+
+};
+
+int main()
+{
+    int no;
+    int choice;
+    //queue q;
+    Queue q1;
+    do
+    {
+        cout<<"\n1. Enqueue student token number.";
+        cout<<"\n2. Dequeue student token number.";
+        cout<<"\n3. Display fornt and rear token number.";
+        cout<<"\n4. Display entire token list.";
+        cout<<"\n5. Exit";
+        cout<<endl;
+
+        cout<<"Enter your choice : ";
+        cin>>choice;
+
+        switch(choice)
+        {
+            case 1:
+            {
+                cout<<"Enter token number : ";
+                cin>>no;
+                q1.enQueue(no);
+                break;
+            }
+            case 2:
+            {
+                q1.deQueue();
+                break;
+            }
+            case 3:
+            {
+                q1.frontRear();
+                break;
+            }
+            case 4:
+            {
+                q1.display();
+                break;
+            }
+            case 5:
+            {
+                cout<<"Exiting Program....!"<<endl;
+                break;
+            }
+            default : 
+            {
+                cout<<"Invalid choice..."<<endl;
+            }
+        }
+    }while(choice!=5);
+
+    return 0;
+}
