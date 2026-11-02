@@ -1,0 +1,44 @@
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+    int wire, correctWire;
+    int chances = 3;
+
+    srand(time(0));
+    correctWire = rand() % 5 + 1;
+
+    cout << "========================\n";
+    cout << "    TIME BOMB DEFUSER\n";
+    cout << "========================\n";
+    cout << "Choose a wire from 1 to 5\n";
+    cout << "You have 3 chances!\n";
+
+    while (chances > 0)
+    {
+        cout << "\nEnter wire number: ";
+        cin >> wire;
+
+        if (wire == correctWire)
+        {
+            cout << "\nBomb Defused Successfully!\n";
+            cout << "You saved the day!\n";
+            return 0;
+        }
+        else
+        {
+            cout << "Wrong wire! Try again.\n";
+            chances--;
+            cout << "Chances left: " << chances << endl;
+        }
+    }
+
+    cout << "\nBOOM! Game Over!\n";
+    cout << "Correct wire was: " << correctWire << endl;
+
+    return 0;
+}
